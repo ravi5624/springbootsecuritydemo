@@ -2,6 +2,7 @@ package com.helloworldgroup.helloworld.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.helloworldgroup.helloworld.config.MyConfig;
 import com.helloworldgroup.helloworld.sercurityconfig.SecurityConfig;
 import models.Employee;
 import com.helloworldgroup.helloworld.service.EmployeeService;
@@ -16,14 +17,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Controller("/api")
+@Controller
+@RequestMapping("/api")
 public class EmployeeController {
 
     @Autowired
     EmployeeService employeeService;
 
     @Autowired
-    SecurityConfig securityConfig;
+    MyConfig myConfig;
 
     // display list of employees
     @GetMapping("/")
@@ -55,7 +57,7 @@ public class EmployeeController {
 
     @PostMapping("/saveEmployee")
     public String saveEmployee(@ModelAttribute("employee")  Employee employee) {
-        employee.setPassword(securityConfig.passwordEncoder().encode(employee.getPassword()));
+        employee.setPassword(myConfig.passwordEncoder().encode(employee.getPassword()));
         employeeService.addEmployee(employee);
         return "redirect:/";
     }

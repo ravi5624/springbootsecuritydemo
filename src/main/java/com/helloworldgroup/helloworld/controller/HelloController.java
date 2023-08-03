@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
-@RestController("/open")
+@RestController
+@RequestMapping("open")
 public class HelloController {
 
     @GetMapping("/h")
